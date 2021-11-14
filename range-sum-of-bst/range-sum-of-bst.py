@@ -5,21 +5,27 @@
 #         self.left = left
 #         self.right = right
 
+lo = -1
+hi = -1
 treeVals = []
 def traverse(node):
     if node is None:
         return
-    treeVals.append(node.val)
-    traverse(node.left)
-    traverse(node.right)
+    if lo <= node.val <= hi:
+        treeVals.append(node.val)
+    if lo < node.val:
+        traverse(node.left)
+    if node.val < hi:
+        traverse(node.right)
 
 class Solution:
     def rangeSumBST(self, root: Optional[TreeNode], low: int, high: int) -> int:
-        global treeVals
+        global treeVals, lo, hi
+        lo = low
+        hi = high
         treeVals = []
         traverse(root)
-        inRange = [x for x in treeVals if low <= x <= high]
-        return sum(inRange)
+        return sum(treeVals)
         
         
 
